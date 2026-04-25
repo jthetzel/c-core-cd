@@ -29,3 +29,11 @@ This project uses Terraform to provision a GKE Autopilot cluster. To deploy the 
    ```bash
    terraform apply
    ```
+7. **Confiugre kubectl**
+   ```bash
+   gcloud container clusters get-credentials c-core-autopilot --region us-central1 --project c-core-labs
+   ```
+8. **Rename context**
+   ```
+   kubectl config rename-context gke_c-core-labs_us-central1_c-core-autopilot c-core-autopilot
+   ```
