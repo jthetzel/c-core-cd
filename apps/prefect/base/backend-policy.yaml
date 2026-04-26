@@ -1,0 +1,20 @@
+apiVersion: networking.gke.io/v1
+kind: GCPBackendPolicy
+metadata:
+  name: prefect-iap-policy
+  namespace: prefect
+spec:
+  default:
+    iap:
+      enabled: true
+      oauth2ClientSecret:
+        # Secret must exist before ArgoCD sync; see terraform/iap.tf outputs
+        # for client_id and client_secret values. Create with:
+        # kubectl create secret generic prefect-iap-secret -n prefect \
+        #   --from-literal=client_id=<terraform output -raw iap_client_id> \
+        #   --from-literal=client_secret=<terraform output -raw iap_client_secret>
+        name: prefect-iap-secret
+  targetRef:
+    group: ""
+    kind: Service
+    name: prefect-server
